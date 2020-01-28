@@ -11,19 +11,30 @@ function listerClients(callbackFn) {
 }
 exports.listerClients = listerClients;
 
-function AjouterClient(callbackFn){
+function AjouterClient(nom , prenom){
 
-    
-    var request = require('request');
+    request.post(
+        'https://hotel-app-ap.herokuapp.com/clients',
+        {
+          json: {
+            "nom": nom,
+            "prenoms":prenom
+          }
+        },
+        (error, res, body) => {
 
-    request('https://hotel-app-ap.herokuapp.com/clients',{method: 'POST'} ,
-
-    {data: '{"nom" : nom, "prenoms" : prenom}'},{ json: true }, function (err, res, data) {
-
-        callbackFn(data);
-
-     });
-    
-
+        });
+      
 }
 exports.AjouterClient = AjouterClient;
+
+function trouverClient(callbackFn){
+    request('https://hotel-app-ap.herokuapp.com/clients', { json: true }, function (err, res, data) {
+        
+        // 3
+        callbackFn(data);
+      
+    });
+
+}
+exports.trouverClient = trouverClient;
